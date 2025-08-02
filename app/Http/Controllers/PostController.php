@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use DataTables;
+// use App\Models\Category;
 
 
 class PostController extends Controller
@@ -15,6 +16,7 @@ class PostController extends Controller
     public function index()
     {
         //
+        return view('post.index', ['data'=>'ok']);
     }
 
     /**
@@ -23,6 +25,9 @@ class PostController extends Controller
     public function create()
     {
         //
+        // $parents=Category::get();
+
+        return view("post.create",[]);
     }
 
     /**
@@ -44,9 +49,11 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(post $post)
+    public function edit(Request $request)
     {
-        //
+        dd('emd');
+        // dd($post);
+        return view('category.edit', ['post'=>$post]);
     }
 
     /**

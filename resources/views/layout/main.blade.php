@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') хуудас</title>
+    <title>@yield('title')</title>
 
     <link href="{{asset('Bootstrap-5.3.7/css/bootstrap.min.css')}}" rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="{{asset('jquery-toast/jquery.toast.min.css')}}" rel="stylesheet" >
 
     @yield('css')
@@ -20,10 +21,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="/">Нүүр хуудас</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="/category">Ангилал</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/post">Нийтлэл</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +54,6 @@
 
 
 <div class="container">
-    миний content
     @yield("content")
 </div>
 {{-- @yield("js") --}}
