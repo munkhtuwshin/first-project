@@ -18,7 +18,8 @@ Route::get("/post/datalist", [PostController::class, 'dataTable']);
 Route::resource('/post', PostController::class);
 // dataTable
 
-
+// Route::get("/category/option/{id}/tags/{parent_id}", [CategoryController::class, "childOptionTags"]);
+Route::get("/category/option/tags/{parent_id}", [CategoryController::class, "childOptionTags"]);
 Route::post("/category/datalist", [CategoryController::class,'dataTable']);
 
 Route::resource("/category", CategoryController::class);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use DataTables;
-// use App\Models\Category;
+use App\Models\Category;
 
 
 class PostController extends Controller
@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        return view('post.index', ['data'=>'ok']);
+        return view('posts.index', ['data'=>'ok']);
     }
 
     /**
@@ -26,8 +26,9 @@ class PostController extends Controller
     {
         //
         // $parents=Category::get();
-
-        return view("post.create",[]);
+        $parents=Category::whereNull("parent_id")->get();
+        $data['parents']=$parents;
+        return view("posts.create",$data);
     }
 
     /**
@@ -35,7 +36,34 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input=$request->all();
+        $post= new Post;
+        $post->title= $input['title'];
+        $post->category_id=  @$input['catygory']? $input['catygory']: @$input['parent_catygory'];
+        $post->title= $input['title'];
+        $post->content= $input['content'];
+        $path=null;
+        
+
+        $categoryName=Category::find($post->category_id);
+        $post->category_name=$categoryName->name;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $originalName = $file->getClientOriginalName();
+            $cleanName = str_replace(' ', '_', $originalName);
+            $filename = time() . '_' . $cleanName;
+        
+            // Файл хадгалах
+            $file->storeAs('images', $filename, 'public');
+        
+            // Вэб дээр харагдах зам
+            $post->image = 'storage/images/' . $filename;
+        }
+        
+        $post->save();
+
+        return "ok";
     }
 
     /**

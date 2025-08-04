@@ -99,11 +99,25 @@ class CategoryController extends Controller
             if(@$dt->parent_id)
             {
                 $parent= Category::find(@$dt->parent_id);
-                return $parent->name;
+                return @$parent->name;
             }else {
                 return "";
             }
         })->make(true);
         return $dataList;
+    }
+
+    // public function childOptionTags($id,$parent_id)
+    // {
+    //     dd("end", $id, $parent_id);
+    // }
+
+    public function childOptionTags(Request $request, $parent_id)
+    {
+        $input = $request->all();
+        // $parent_id
+        $childList= Category::where("parent_id", $parent_id)->get();
+
+        return view("category.optionTag",["childs"=>$childList]);
     }
 }
