@@ -29,12 +29,10 @@
 @section("css")
 <link href="{{asset('DataTables/datatables.min.css')}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<link rel="stylesheet" href="{{asset('jquery-confirm3.3.4/jquery-confirm.min.css')}}">
 @endsection
 
 @section("js")
 <script src="{{asset('DataTables/datatables.min.js')}}"></script>
-<script src="{{asset('jquery-confirm3.3.4/jquery-confirm.min.js')}}"></script>
 <script>
 
 var categoryDt=new DataTable("#categoryList" ,{
@@ -125,5 +123,6 @@ function deleteCategory(id,name)
     }
 });
 }
+
 </script>
 @endsection

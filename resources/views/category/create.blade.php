@@ -16,6 +16,9 @@
       <label for="name" class="form-label">Ангилал нэр</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="Ангилалын нэр оруулна уу">
     </div>
-    <button type="submit" class="btn btn-primary">Хадгалах</button>
+    <div class="d-flex justify-content-center gap-4 m-2">
+      <button class="btn btn-success" type="submit"> хадгалах </button>
+      <a href="/category" class="btn btn-primary">Буцах </a>
+    </div>
   </form>
 @endsection

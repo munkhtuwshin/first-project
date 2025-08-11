@@ -8,7 +8,7 @@
     <link href="{{asset('Bootstrap-5.3.7/css/bootstrap.min.css')}}" rel="stylesheet" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="{{asset('jquery-toast/jquery.toast.min.css')}}" rel="stylesheet" >
-
+    <link rel="stylesheet" href="{{asset('jquery-confirm3.3.4/jquery-confirm.min.css')}}">
     @yield('css')
 </head>
 <body>
@@ -62,7 +62,7 @@
 <script src="{{asset('jquery-3.7.1/jquery-3.7.1.min.js')}}"></script>
 <script src="{{asset('Bootstrap-5.3.7/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('jquery-toast/jquery.toast.min.js')}}"></script>
-
+<script src="{{asset('jquery-confirm3.3.4/jquery-confirm.min.js')}}"></script>
 @yield("js")
 </body>
 </html>

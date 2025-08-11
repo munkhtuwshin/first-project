@@ -16,7 +16,8 @@
       <label for="name" class="form-label">Ангилал нэр</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="Ангилалын нэр оруулна уу" value="{{$category->name}}">
     </div>
-    <button type="submit" class="btn btn-primary">Хадгалах</button>
+    <button type="submit" class="btn btn-success">Хадгалах</button>
+    <a href="/category" class="btn btn-primary">Буцах</a>
   </form>
 @endsection
 
@@ -36,6 +37,7 @@
         'X-CSRF-TOKEN': csrf
         },      
         data: { "parent_id":formData[1]['value'], name : formData[2]['value'] },
+        
         success: function (response) {
             window.location.href="/category"
         },

@@ -15,6 +15,12 @@ Route::get('/', [HomeController::class,'index']);
 
 Route::get("/post/datalist", [PostController::class, 'dataTable']);
 
+Route::get("/post/{post}/word", [PostController::class, 'wordGenerate']);
+Route::get("/post/{id}/pdf", [PostController::class, 'pdfgenerate']);
+
+Route::get("/qr", [PostController::class, 'generate']);
+
+
 Route::resource('/post', PostController::class);
 // dataTable
 

@@ -1,10 +1,11 @@
-
+a
 @extends("layout.main")
 
 @section("title", "Нийтлэл хуудас")
 
 @section("content")
 <a class="btn btn-primary" href="post/create" >Шинээр нэмэх</a>
+<input type="hidden" name="csrf-token" id="csrf-token" value="{{ csrf_token() }}">
 <table id="postDataList" class="display">
   <thead>
       <tr>
@@ -17,6 +18,8 @@
           <th>Засварласан</th>
           <th>Засварлах</th>
           <th>устгах</th>
+          <th>хэвлэх(docx)</th>
+          <th>хэвлэх(pdf)</th>
       </tr>
   </thead>
     <tbody>
@@ -37,7 +40,7 @@
                 <fieldset >
                   <legend>Нийтлэл шинээр нэмэх</legend>
                   <div class="mb-3">
-                    <label for="title" class="form-label">гарчиг</label>
+                    <label for="title" id="title" class="form-label">гарчиг</label>
                     <input type="text" id="title" class="form-control" placeholder="Гарчиг оруул">
                   </div>
                   <div class="mb-3">
@@ -88,7 +91,7 @@ var mydata= new DataTable('#postDataList', {
         { data: 'content', default: "" },
         { data: 'image', render:(data, type, row, meta)=>{
            if(row.image){
-              return `<img src="/${row.image}" width="300"/>`
+             return `<img src="/${row.image}" width="200" height="200"/>`
            }else{
             return "";
            }
@@ -96,11 +99,23 @@ var mydata= new DataTable('#postDataList', {
         { data: 'created_at', default: "" },
         { data: 'updated_at', default: "" },
         { name: "edit", render:(data, type, row, meta)=>{
-          return `<a href="#${row.title}"> <i class="bi bi-pen"></i></a>`;
+          return `<a href="/post/${row.id}/edit"> <i class="bi bi-pen"></i></a>`;
         }, default:""},
-        {name: 'delete', render:(data, type, row, meta)=>{
-          return `<a href="#${row.title}"> <i class="bi bi-trash"></i></a>`;
-        }}
+        {data: '', render:function (data, type, row, meta){
+          return `<a href="javascript:deleteCategory(${row.id}, '${row.title}')"> <i class="bi bi-trash"></i></a>`;
+        }},
+        {
+  data: '',
+  render: function(data, type, row, meta) {
+    return `<a href="javascript:wordCreate(${row.id}, '${row.category_name}', '${row.title}', '${row.content}', '${row.image}')">
+              <i class="bi bi-printer-fill"></i></a>`;
+  }},
+  {
+  data: '',
+  render: function(data, type, row, meta) {
+    return `<a href="javascript:pdfCreate(${row.id})">
+              <i class="bi bi-filetype-pdf"></i></a>`;
+  }},
     ],
     processing: true,
     serverSide: true,
@@ -118,6 +133,73 @@ var mydata= new DataTable('#postDataList', {
 //   textAlign : 'left',            // Alignment of text i.e. left, right, center
 //   position : 'top-right'       // bottom-left or bottom-right or bottom-center or top-left or top-right or 
 // })
+function deleteCategory(id,title)
+{
+    $.confirm({
+    title: 'Анхаар!',
+    content: `Та ${title} гэсэн нэртэй ангилалыг устгахдаа итгэлтэй байна уу`,
+    buttons: {
+        confirm: {
+            text: "Устгах",
+            btnClass: 'btn-red',
+            action: function () {
+                $.ajax({
+                    url: "/post/"+id,
+                    method: "DELETE", 
+                    headers: {
+                    'X-CSRF-TOKEN': $('#csrf-token').val()
+                    },      
+                    data: null,
+                    success: function (response) {
+                        $.toast({ 
+                          text : "Амжилттай устгагдлаа", 
+                          showHideTransition : 'slide',  
+                          bgColor : 'green',              
+                          textColor : '#eee',            
+                          allowToastClose : false,       
+                          hideAfter : 5000,              
+                          stack : 5,                     
+                          textAlign : 'left',            
+                          position : 'top-right'       
+                        })
+                        mydata.draw();
+
+                    },
+                    error: function (xhr) {
+                        // console.error("Алдаа:", xhr.responseText);
+                        $.toast({ 
+                          text : "Алдаа:"+ xhr.responseText, 
+                          showHideTransition : 'slide',  
+                          bgColor : 'red',              
+                          textColor : '#eee',            
+                          allowToastClose : false,       
+                          hideAfter : 5000,              
+                          stack : 5,                     
+                          textAlign : 'left',            
+                          position : 'top-right'       
+                        })
+                    }
+                });
+            }
+        },
+        cancel: {
+            text: "Болих",
+            btnClass: 'btn-blue',
+        },
+    }
+});
+}
+function wordCreate(id,category_name, title,content,image) {
+    // console.log("Printing:", id,category_name, title,content,image);
+    
+    window.location.href = `/post/${id}/word`;
+}
+function pdfCreate (id,category_name, title,content,image){
+  console.log("Printing:", id,category_name, title,content,image);
+   window.location.href = `/post/${id}/pdf`;
+}
+
+
 </script>
 
 
