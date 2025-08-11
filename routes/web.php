@@ -29,3 +29,6 @@ Route::get("/category/option/tags/{parent_id}", [CategoryController::class, "chi
 Route::post("/category/datalist", [CategoryController::class,'dataTable']);
 
 Route::resource("/category", CategoryController::class);
+
+Route::get("/pdf/test", [HomeController::class,'testPdf']);
+Route::get("/excel/test", [HomeController::class,'testExcel']);

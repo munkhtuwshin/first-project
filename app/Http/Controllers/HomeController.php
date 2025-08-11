@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Home;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+use App\Exports\HomeExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -63,5 +67,27 @@ class HomeController extends Controller
     public function destroy(Home $home)
     {
         //
+    }
+
+    public function testPdf()
+    {
+        // return view("home.pdf.test",[]);
+       
+    
+        // $pdf = PDF::loadView('home.pdf.test', [])
+        // $pdf = PDF::loadView('home.pdf.test', [])->setPaper('a4', 'landscape')
+        $pdf = PDF::loadView('home.pdf.test', [])->setPaper('a4', 'portrait')
+        ->setOptions([
+            'defaultFont' => 'DejaVu Sans',
+            // 'isRemoteEnabled' => true
+        ]);
+    
+    
+        // return $pdf->download("downloaded.pdf");
+        return $pdf->stream();
+    }
+
+    public function testExcel(){
+        return Excel::download(new HomeExport, 'posts.xlsx');
     }
 }
